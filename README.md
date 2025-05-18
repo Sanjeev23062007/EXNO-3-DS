@@ -30,7 +30,6 @@ We use this categorical data encoding technique when the features are nominal(do
 • Boxcox method
 • Yeojohnson method
 
-# CODING AND OUTPUT:
 
 # CODING AND OUTPUT:
 
