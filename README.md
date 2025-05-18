@@ -31,29 +31,229 @@ We use this categorical data encoding technique when the features are nominal(do
 • Yeojohnson method
 
 # CODING AND OUTPUT:
-![Screenshot 2024-11-21 110017](https://github.com/user-attachments/assets/8371573e-9f74-4d4f-b922-f1805f40419d)
-![Screenshot 2024-11-21 110040](https://github.com/user-attachments/assets/0348772b-dc66-43f6-8d2f-14874874654a)
-![Screenshot 2024-11-21 110106](https://github.com/user-attachments/assets/cd798b90-d133-413d-b9d9-a6989cf71ce8)
-![Screenshot 2024-11-21 110130](https://github.com/user-attachments/assets/85933c14-37c3-493b-ac96-c0c2d16e830f)
-![Screenshot 2024-11-21 110151](https://github.com/user-attachments/assets/14582ad0-faaf-4d9d-8c66-a0400829ef75)
-![Screenshot 2024-11-21 110210](https://github.com/user-attachments/assets/aa6cb3c4-5262-4724-8899-010ad0bef1d0)
-![Screenshot 2024-11-21 110230](https://github.com/user-attachments/assets/d9b1ff58-b84a-4426-ac56-2ed6974a626c)
-![Screenshot 2024-11-21 110255](https://github.com/user-attachments/assets/a427e0ce-79c3-4def-a09f-a07144af232b)
-![Screenshot 2024-11-21 110316](https://github.com/user-attachments/assets/c7f97a1e-3c77-4355-b16c-97b02bbbeaaa)
-![Screenshot 2024-11-21 110334](https://github.com/user-attachments/assets/3e3056c0-2314-4bed-b4ef-76b2ee1c63e2)
-![Screenshot 2024-11-21 110605](https://github.com/user-attachments/assets/607f633f-5bf2-42a8-b83f-ac3c84b066c2)
-![Screenshot 2024-11-21 110623](https://github.com/user-attachments/assets/b6cf4585-c3a7-4382-8dcf-cd5bdac3bd02)
-![Screenshot 2024-11-21 110641](https://github.com/user-attachments/assets/997949a7-46f3-42a7-a158-8ab72fbbb8d0)
-![Screenshot 2024-11-21 110705](https://github.com/user-attachments/assets/793b5fd6-bf80-4e36-a91a-cd54fc9200f2)
-![Screenshot 2024-11-21 110724](https://github.com/user-attachments/assets/1655c94e-f742-47f1-bc91-e8f68854dc39)
-![Screenshot 2024-11-21 110842](https://github.com/user-attachments/assets/8b10c222-52cf-4d0a-83a5-4c95ef6c6cb1)
-![Screenshot 2024-11-21 110901](https://github.com/user-attachments/assets/509902f5-b521-41ff-9840-aca04497aa52)
-![Screenshot 2024-11-21 110919](https://github.com/user-attachments/assets/87624505-30a1-48b2-86a6-f93f130da1fe)
-![Screenshot 2024-11-21 110943](https://github.com/user-attachments/assets/d900a180-6895-4c0b-a261-bf92d020b55b)
-![Screenshot 2024-11-21 111003](https://github.com/user-attachments/assets/1ea3acdf-8d3a-4de6-a244-f4b3746481ae)
-![Screenshot 2024-11-21 111021](https://github.com/user-attachments/assets/7338d4ee-19a8-4cdc-87fc-9db465c0c62d)
 
-# RESULT:
-       # INCLUDE YOUR RESULT HERE
+# CODING AND OUTPUT:
 
+```python
+
+import pandas as pd
+df=pd.read_csv("Encoding Data.csv")
+df
+```
+![image](https://github.com/PSriVarshan/EXNO-3-DS/assets/114944059/6a654a7f-8923-43af-837f-fbaaae172990)
+
+
+```py
+from sklearn.preprocessing import LabelEncoder,OrdinalEncoder
+pm=['Hot','Warm','Cold']
+e1=OrdinalEncoder(categories=[pm])
+e1.fit_transform(df[["ord_2"]])
+```
+![image](https://github.com/PSriVarshan/EXNO-3-DS/assets/114944059/da24dfe7-2a7e-4065-9fcf-a4eca0bc2bd2)
+
+
+```py
+df['bo2']=e1.fit_transform(df[["ord_2"]])
+df
+```
+![image](https://github.com/PSriVarshan/EXNO-3-DS/assets/114944059/101cabae-f64c-4b1d-bc3d-1ced6bea5092)
+
+
+```py
+le=LabelEncoder()
+dfc=df.copy()
+dfc['ord_2']=le.fit_transform(dfc['ord_2'])
+dfc
+```
+![image](https://github.com/PSriVarshan/EXNO-3-DS/assets/114944059/0e5b50a7-166d-4c8a-aa7f-47d4a829154d)
+
+```py
+from sklearn.preprocessing import OneHotEncoder
+ohe=OneHotEncoder(sparse=False)
+df2=df.copy()
+enc=pd.DataFrame(ohe.fit_transform(df2[["nom_0"]]))
+```
+
+
+```py
+df2=pd.concat([df2,enc],axis=1)
+df2
+```
+![image](https://github.com/PSriVarshan/EXNO-3-DS/assets/114944059/737d95d4-7f40-4c73-a428-e710982d509e)
+
+
+```py
+pd.get_dummies(df2,columns=["nom_0"])
+```
+![image](https://github.com/PSriVarshan/EXNO-3-DS/assets/114944059/9e7e2796-d572-42bf-9a59-799e6105bb68)
+
+
+```py
+pip install --upgrade category_encoders
+```
+
+```py
+from category_encoders import BinaryEncoder
+df=pd.read_csv("data.csv")
+df
+```
+
+
+```py
+be=BinaryEncoder()
+nd=be.fit_transform(df['Ord_2'])
+df
+```
+
+
+```py
+dfb=pd.concat([df,nd],axis=1)
+dfb
+```
+![image](https://github.com/PSriVarshan/EXNO-3-DS/assets/114944059/4f6f6a5a-3ed7-42b2-893d-ef09c752be3d)
+
+
+```py
+from category_encoders import TargetEncoder
+te=TargetEncoder()
+CC=df.copy()
+new=te.fit_transform(X=CC["City"],y=CC["Target"])
+CC=pd.concat([CC,new],axis=1)
+CC
+```
+![image](https://github.com/PSriVarshan/EXNO-3-DS/assets/114944059/f70c4873-aca1-4a62-a7a3-b40dfe168af1)
+
+
+```py
+import pandas as pd
+from scipy import stats
+import numpy as np
+df=pd.read_csv("Data_to_Transform.csv")
+df
+```
+![image](https://github.com/PSriVarshan/EXNO-3-DS/assets/114944059/35a6bcdc-2928-41c5-986c-903d5205d9d5)
+
+
+```py
+df.skew()
+```
+![image](https://github.com/PSriVarshan/EXNO-3-DS/assets/114944059/9cebcdc2-ff61-4e31-bc34-db6b3388e546)
+
+
+```py
+np.log(df["Highly Positive Skew"])
+```
+![image](https://github.com/PSriVarshan/EXNO-3-DS/assets/114944059/c316b1f8-a5a2-4487-99a9-1a0144e00ae1)
+
+
+```py
+np.reciprocal(df["Moderate Positive Skew"])
+```
+![image](https://github.com/PSriVarshan/EXNO-3-DS/assets/114944059/d5ccd5c9-87cb-42e4-8420-a37ea75e9add)
+
+
+```py
+np.sqrt(df["Highly Positive Skew"])
+```
+![image](https://github.com/PSriVarshan/EXNO-3-DS/assets/114944059/09d3e8f9-0558-4039-90ff-3b358dcaeb2c)
+
+
+```py
+np.square(df["Highly Positive Skew"])
+```
+![image](https://github.com/PSriVarshan/EXNO-3-DS/assets/114944059/a1ab31eb-09c6-4bb6-a569-466254420fee)
+
+
+```py
+df["Highly Positive Skew_boxcox"], parameters=stats.boxcox(df["Highly Positive Skew"])
+df
+```
+![image](https://github.com/PSriVarshan/EXNO-3-DS/assets/114944059/4133ceae-19e0-487a-9e04-2185421e999c)
+
+
+```py
+df.skew()
+```
+![image](https://github.com/PSriVarshan/EXNO-3-DS/assets/114944059/f2b6800d-4fda-4da3-9652-f3dcc47dc76d)
+
+
+```py
+df["Highly Negative Skew_yeojohnson"],parameters=stats.yeojohnson(df["Highly Negative Skew"])
+df.skew()
+```
+![image](https://github.com/PSriVarshan/EXNO-3-DS/assets/114944059/84134adb-72d1-4afc-bf2f-6649e0a00a6e)
+
+```py
+from sklearn.preprocessing import QuantileTransformer
+qt=QuantileTransformer(output_distribution='normal')
+df["Moderate Negative Skew_1"]=qt.fit_transform(df[["Moderate Negative Skew"]])
+df
+```
+![image](https://github.com/PSriVarshan/EXNO-3-DS/assets/114944059/d8838866-2c73-4e6f-bb78-719723589804)
+
+```py
+import seaborn as sns
+import statsmodels.api as sm
+import matplotlib.pyplot as plt
+sm.qqplot(df["Moderate Negative Skew"],line='45')
+plt.show()
+```
+![image](https://github.com/PSriVarshan/EXNO-3-DS/assets/114944059/48cf7384-276f-4955-8bad-16ef34e4b075)
+
+
+```py
+sm.qqplot(np.reciprocal(df["Moderate Negative Skew"]),line='45')
+plt.show()
+```
+
+![image](https://github.com/PSriVarshan/EXNO-3-DS/assets/114944059/9a9a16d7-5d01-4216-bee8-255e7477463f)
+
+
+
+```py
+from sklearn.preprocessing import QuantileTransformer
+qt=QuantileTransformer(output_distribution='normal',n_quantiles=891)
+
+df["Moderate Negative Skew"]=qt.fit_transform(df[["Moderate Negative Skew"]])
+
+sm.qqplot(df["Moderate Negative Skew"],line='45')
+plt.show()
+```
+
+![image](https://github.com/PSriVarshan/EXNO-3-DS/assets/114944059/d4a59337-cc27-46c6-b47c-5e9ba7988626)
+
+
+```py
+df["Highly Negative Skew_1"]=qt.fit_transform(df[["Highly Negative Skew"]])
+sm.qqplot(df["Highly Negative Skew"],line='45')
+plt.show()
+```
+
+![image](https://github.com/PSriVarshan/EXNO-3-DS/assets/114944059/6f7a4eaa-1c54-4409-8b57-8b407d5842f7)
+
+
+```py
+dt=pd.read_csv("titanic_dataset.csv")
+dt
+```
+
+```py
+from sklearn.preprocessing import QuantileTransformer
+qt=QuantileTransformer(output_distribution='normal',n_quantiles=891)
+dt["Age_1"]=qt.fit_transform(dt[["Age"]])
+sm.qqplot(dt['Age'],line='45') 
+plt.show()
+```
+![image](https://github.com/PSriVarshan/EXNO-3-DS/assets/114944059/e2ff6572-cb52-434f-8d9a-980843e1a1b9)
+
+```py
+sm.qqplot(df["Highly Negative Skew_1"],line='45')
+plt.show()
+```
+![image](https://github.com/PSriVarshan/EXNO-3-DS/assets/114944059/d5c66705-7e21-4a6b-8bc7-a9e1ca23ae85)
+
+
+
+## RESULT:
+Thus the given data, Feature Encoding, Transformation process and save the data to a file was performed successfully.
        
